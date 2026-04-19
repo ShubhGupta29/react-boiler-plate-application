@@ -1,67 +1,31 @@
-# react-oiler-plate-application
+## The Redux Vocabulary
+To understand the hooks, you must understand the machinery behind them:
 
-To ensure this boilerplate reflects senior-level engineering, we won't just spin up local servers. We will containerize the environment using Docker and Docker Compose right from the start, setting the stage for advanced integrations like Redis caching for the shopping cart and Elasticsearch for product queries down the line.
+### Redux
+- The overall "State Machine." It is a single source of truth (a big JavaScript object) that holds the data for your entire app.
 
-Here is the blueprint for Phase 1: Architecture and Scaffolding.
+### Slice
+- A "slice" of that big object. For an e-commerce app, you’d have a cartSlice, a userSlice, and a productSlice. It contains the initial data and the logic to update it.
 
-## Step 1: The Root Orchestration
-First, let's create a monorepo structure to keep the frontend and backend tightly coupled for development, managed by a centralized orchestration file.
+### Reducer
+- The "logic" inside the slice. It’s a function that takes the current state and an action, then returns a new state. (e.g., state.count + 1).
 
-### bash
+### RTK Query (The API Slice)
+- A special slice that handles "Server State." It doesn't just store data; it manages the fetching, caching, and refreshing of that data.
 
-mkdir ecommerce-boilerplate
-cd ecommerce-boilerplate
-mkdir backend frontend
+------------------------------------------------------------------------------------------------------------
 
-At the root, create a docker-compose.yml file. This will spin up your MongoDB database, a Redis instance for caching, and eventually your Node and Next.js containers.
+Understanding the Core Hooks
+In a senior-level Next.js app, you will use two types of hooks: Standard Redux Hooks (for local UI state like the cart) and RTKQ Auto-generated Hooks (for server data like products).
 
-## Step 2: Backend Scaffolding (Node.js & Express)
-Navigate into your backend folder and initialize the foundation. We want a structured, scalable API.
+# useSelector (The "Reader")
+- Think of this as a "Select" statement in SQL. It allows your component to "extract" or "read" data from the Redux store.
 
-### bash
+Interview Tip: Mention that useSelector implements a selector function. It only triggers a re-render if the specific data you selected changes, which is a key performance optimization.
 
-cd backend
-npm init -y
-npm install express mongoose cors dotenv redis
-npm install --save-dev nodemon typescript @types/node @types/express ts-node
-Initialize your TypeScript configuration:
+# useDispatch (The "Messenger")
+- In Redux, you never change state directly (e.g., state.cart = [] is a crime). Instead, you "dispatch" an Action. The Dispatcher is the messenger that carries your request to the Reducer.
 
-### bash
+-----------------------------------------------------------------------------------------------------------
 
-npx tsc --init
-Create a scalable folder structure. An e-commerce backend grows quickly, so separating routes, controllers, and data models is essential:
-
-### bash
-
-mkdir src
-cd src
-mkdir controllers models routes config middleware
-touch server.ts config/db.ts
-
-## Step 3: Frontend Scaffolding (Next.js & React)
-Next.js handles the frontend scaffolding beautifully with its CLI. We'll use the App Router (the modern standard) and set it up with Redux Toolkit, which will be vital for managing complex client-side state like the user's shopping cart and checkout process.
-
-Navigate back to your root directory, then into the frontend:
-
-### bash
-
-cd ../
-npx create-next-app@latest frontend
-
-(When prompted: choose TypeScript, ESLint, Tailwind CSS, src/ directory, and App Router).
-
-Once it's generated, navigate into the frontend and install your state management tools:
-
-### bash
-
-cd frontend
-npm install @reduxjs/toolkit react-redux
-Create a dedicated directory for your state slices, ensuring a clean separation of concerns away from your UI components:
-
-### bash
-
-mkdir -p src/lib/store
-touch src/lib/store/store.ts src/lib/store/cartSlice.ts
-
-## Step 4: Connecting the Environments
-To tie this together, you'll update your root docker-compose.yml to build the backend and frontend Dockerfiles (which we will write next), allowing you to boot the entire stack—database, cache, API, and UI—with a single docker-compose up command.
+Instead of a standard slice, we use createApi. This will automatically generate a hook for us called useGetProductsQuery

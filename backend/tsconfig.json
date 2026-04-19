@@ -42,7 +42,7 @@
     // Recommended Options
     "strict": true,
     "jsx": "react-jsx",
-    "verbatimModuleSyntax": true,
+    "verbatimModuleSyntax": false, // when true, This strict setting forces you to explicitly mark imports that are only used as types with the type keyword so that TypeScript knows it can safely erase them when compiling to JavaScript.
     "isolatedModules": true,
     "noUncheckedSideEffectImports": true,
     "moduleDetection": "force",
