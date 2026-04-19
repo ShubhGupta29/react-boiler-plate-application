@@ -24,12 +24,14 @@ cd backend
 npm init -y
 npm install express mongoose cors dotenv redis
 npm install --save-dev nodemon typescript @types/node @types/express ts-node
-Initialize your TypeScript configuration:
+
+- Initialize your TypeScript configuration:
 
 ### bash
 
 npx tsc --init
-Create a scalable folder structure. An e-commerce backend grows quickly, so separating routes, controllers, and data models is essential:
+
+- Create a scalable folder structure. An e-commerce backend grows quickly, so separating routes, controllers, and data models is essential:
 
 ### bash
 
