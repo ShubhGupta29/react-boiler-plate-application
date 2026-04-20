@@ -3,6 +3,8 @@ To understand the hooks, you must understand the machinery behind them:
 
 ### Redux
 - The overall "State Machine." It is a single source of truth (a big JavaScript object) that holds the data for your entire app.
+- Redux is a powerful state management library for JavaScript applications, commonly used with React. 
+- It provides a predictable state container that helps you write consistent applications that run in different environments (client, server, and native), and are easy to test.
 
 ### Slice
 - A "slice" of that big object. For an e-commerce app, you’d have a cartSlice, a userSlice, and a productSlice. It contains the initial data and the logic to update it.
@@ -29,3 +31,10 @@ Interview Tip: Mention that useSelector implements a selector function. It only 
 -----------------------------------------------------------------------------------------------------------
 
 Instead of a standard slice, we use createApi. This will automatically generate a hook for us called useGetProductsQuery
+
+-----------------------------------------------------------------------------------------------------------
+
+State in reducer : "what the data currently looks like,"
+Action in reducer: what just occurred and what data is involved."
+Reducer : take the state and the action; and return a brand new state that reflects the changes described by the action.
+Redux Toolkit uses a library called Immer to ensure that the state remains immutable (meaning a new state object is created with the changes, rather than altering the original).
